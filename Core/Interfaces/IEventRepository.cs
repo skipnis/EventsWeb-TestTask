@@ -4,5 +4,5 @@ namespace Core.Interfaces;
 
 public interface IEventRepository : IRepository<Event>
 {
-    public Task<IEnumerable<Event>> GetByName(string name);
+    public Task<Event> GetByName(string name);
 }
