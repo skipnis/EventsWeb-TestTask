@@ -11,6 +11,5 @@ public class Event : BaseEntity<Guid>
     public int MaximumParticipants { get; set; }
     public DateTime Date { get; set; }
     public string ImageUrl { get; set; }
-    
     public ICollection<EventUser> EventUsers { get; set; }
 }

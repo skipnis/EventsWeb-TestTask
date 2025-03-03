@@ -1,10 +1,11 @@
+using Application.Interfaces;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace Infrastructure.UnitOfWork;
 
-public class UnitOfWork // : IUnitOfWork
+public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContext _context;
     private IDbContextTransaction _transaction;
@@ -18,8 +19,8 @@ public class UnitOfWork // : IUnitOfWork
         _userRepository = userRepository;
     }
     
-    public IEventRepository Events => _eventRepository;
-    public IUserRepository Users => _userRepository;
+    public IEventRepository EventRepository => _eventRepository;
+    public IUserRepository UserRepository => _userRepository;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

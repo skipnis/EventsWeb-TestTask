@@ -39,7 +39,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         
         builder.Property(u=>u.BirthDate)
             .HasColumnName("birth_date")
-            .HasColumnType("datetime")
+            .HasColumnType("date")
             .IsRequired();
     }
 }
