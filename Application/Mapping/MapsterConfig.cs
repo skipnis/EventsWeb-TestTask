@@ -15,8 +15,8 @@ public class MapsterConfig
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.ImageUrl, src => src.ImageUrl)
-            .Map(dest => dest.Places, src => src.Places.Select(p => new PlaceDto { Name = p.Name, Address = p.Address }))
-            .Map(dest => dest.Categories, src => src.Categories.Select(c => new CategoryDto { Name = c.Name }));
+            .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
+            .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
         
         TypeAdapterConfig<EventUpdateDto, Event>.NewConfig()
             .Map(dest => dest.Title, src => src.Title)
@@ -24,25 +24,25 @@ public class MapsterConfig
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.ImageUrl, src => src.ImageUrl)
-            .Map(dest => dest.Places, src => src.Places.Select(p => new Place { Name = p.Name, Address = p.Address }).ToList())
-            .Map(dest => dest.Categories, src => src.Categories.Select(c => new Category { Name = c.Name }).ToList());
-        
+            .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
+            .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
+
         TypeAdapterConfig<Event, EventFullDto>.NewConfig()
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.ImageUrl, src => src.ImageUrl)
-            .Map(dest => dest.Places, src => src.Places.Select(p => new PlaceDto { Name = p.Name, Address = p.Address }).ToList())
-            .Map(dest => dest.Categories, src => src.Categories.Select(c => new CategoryDto { Name = c.Name }).ToList());
-        
+            .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
+            .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
+
         TypeAdapterConfig<EventCreateDto, Event>.NewConfig()
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date)
             .Map(dest => dest.ImageUrl, src => src.ImageUrl)
-            .Map(dest => dest.Places, src => src.Places.Select(p => new Place { Name = p.Name, Address = p.Address }).ToList())
-            .Map(dest => dest.Categories, src => src.Categories.Select(c => new Category { Name = c.Name }).ToList());
+            .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
+            .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
 
         TypeAdapterConfig<User, UserProfileDto>.NewConfig()
             .Map(dest => dest.FullName, src => src.FirstName + " " + src.LastName)

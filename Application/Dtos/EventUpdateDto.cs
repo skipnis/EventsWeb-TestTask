@@ -8,6 +8,6 @@ public class EventUpdateDto
     public DateTime Date { get; set; }
     public string ImageUrl { get; set; }
     
-    public IEnumerable<PlaceDto> Places { get; set; }
-    public IEnumerable<CategoryDto> Categories { get; set; }
+    public PlaceDto Place { get; set; }
+    public CategoryDto Category { get; set; }
 }

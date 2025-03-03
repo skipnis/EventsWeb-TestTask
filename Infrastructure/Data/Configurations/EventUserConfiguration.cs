@@ -14,7 +14,7 @@ public class EventUserConfiguration : IEntityTypeConfiguration<EventUser>
         
         builder.Property(eu => eu.RegisteredAt)
             .HasColumnName("registered_at")
-            .HasColumnType("timestamp")
+            .HasColumnType("timestamptz")
             .IsRequired();
         
         builder.HasOne(eu => eu.Event)

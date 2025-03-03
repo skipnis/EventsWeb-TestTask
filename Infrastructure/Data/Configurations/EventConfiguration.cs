@@ -24,7 +24,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsRequired();
 
         builder.Property(e => e.Description)
-            .HasColumnName("event_title")
+            .HasColumnName("event_description")
             .HasColumnType("text");
 
         builder.Property(e => e.ImageUrl)
@@ -38,30 +38,20 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsRequired();
         
         builder.Property(e=>e.Date)
-            .HasColumnType("timestampz")
+            .HasColumnType("timestamptz")
             .HasColumnName("event_date")
             .IsRequired();
         
-        builder.OwnsMany(e => e.Categories, category =>
+        builder.OwnsOne(e => e.Category, category =>
         {
-            category.ToTable("EventCategories");
-    
-            category.WithOwner().HasForeignKey("event_id");
-
-            category.Property(p => p.Name)
+            category.Property(c => c.Name)
                 .HasColumnName("category_name")
                 .HasColumnType("varchar(50)")
                 .HasMaxLength(50);
-
-            category.HasKey("event_id", "category_name");
         });
         
-        builder.OwnsMany(e => e.Places, place =>
+        builder.OwnsOne(e => e.Place, place =>
         {
-            place.ToTable("EventPlaces");
-    
-            place.WithOwner().HasForeignKey("event_id");
-
             place.Property(p => p.Name)
                 .HasColumnName("place_name")
                 .HasColumnType("varchar(50)")
@@ -71,8 +61,6 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
                 .HasColumnName("place_address")
                 .HasColumnType("varchar(100)")
                 .HasMaxLength(100);
-
-            place.HasKey("event_id", "place_name");
         });
     }
 }
