@@ -1,9 +1,8 @@
 using Core.Enities;
 using Core.Interfaces;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace Infrastructure.Data.Repositories;
 
 public class UserRepository : IUserRepository
 {

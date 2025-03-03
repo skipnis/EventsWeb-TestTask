@@ -1,8 +1,7 @@
-using Application.Interfaces;
-using Application.Utils;
 using Core.Interfaces;
 using Infrastructure.Data;
-using Infrastructure.Repositories;
+using Infrastructure.Data.Repositories;
+using Infrastructure.Data.UnitOfWork;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,10 +16,10 @@ public static class InfrastructureServiceRegistration
         services.AddDbContext<ApplicationDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         
-        services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEmailService, EmailService>();
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

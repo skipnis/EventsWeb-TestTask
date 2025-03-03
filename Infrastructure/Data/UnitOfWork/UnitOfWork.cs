@@ -1,9 +1,7 @@
-using Application.Interfaces;
 using Core.Interfaces;
-using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Infrastructure.UnitOfWork;
+namespace Infrastructure.Data.UnitOfWork;
 
 public class UnitOfWork : IUnitOfWork
 {
