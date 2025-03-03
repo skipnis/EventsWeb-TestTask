@@ -19,7 +19,7 @@ public class EventRepository : IEventRepository
         await _events.AddAsync(entity);
     }
 
-    public async Task<IEnumerable<Event>> GetAll()
+    public async Task<IEnumerable<Event>> GetAllAsync()
     {
         return await _events.ToListAsync();
     }
@@ -29,17 +29,17 @@ public class EventRepository : IEventRepository
         return await _events.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Event>> GetPaginated(int pageNumber, int pageSize)
+    public async Task<IEnumerable<Event>> GetPaginatedAsync(int pageNumber, int pageSize)
     {
         return await _events.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public async Task Update(Event entity)
+    public async Task UpdateAsync(Event entity)
     { 
         _events.Update(entity);
     }
 
-    public async Task DeleteById(Guid id)
+    public async Task DeleteAsync(Guid id)
     {
         var entity = await _events.FindAsync(id);
         _events.Remove(entity);

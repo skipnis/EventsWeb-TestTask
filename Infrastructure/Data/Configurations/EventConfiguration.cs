@@ -38,7 +38,7 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .IsRequired();
         
         builder.Property(e=>e.Date)
-            .HasColumnType("datetime")
+            .HasColumnType("timestampz")
             .HasColumnName("event_date")
             .IsRequired();
         
