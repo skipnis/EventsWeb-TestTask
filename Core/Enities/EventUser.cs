@@ -8,5 +8,5 @@ public class EventUser
     public Guid EventId { get; set; }
     public Event Event { get; set; }
     
-    public DateTime RegisteredAt { get; set; }
+    public DateTime RegisteredAt { get; set; } = DateTime.UtcNow;
 }

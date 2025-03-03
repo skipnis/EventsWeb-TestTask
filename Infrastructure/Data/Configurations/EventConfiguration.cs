@@ -37,6 +37,11 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
             .HasColumnType("int")
             .IsRequired();
         
+        builder.Property(e=>e.Date)
+            .HasColumnType("datetime")
+            .HasColumnName("event_date")
+            .IsRequired();
+        
         builder.OwnsMany(e => e.Categories, category =>
         {
             category.ToTable("EventCategories");

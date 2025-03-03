@@ -10,7 +10,12 @@ public class EventUserConfiguration : IEntityTypeConfiguration<EventUser>
     {
         builder.ToTable("EventUsers");
 
-        builder.HasKey(eu => new { eu.EventId, eu.UserId }); 
+        builder.HasKey(eu => new { eu.EventId, eu.UserId });
+        
+        builder.Property(eu => eu.RegisteredAt)
+            .HasColumnName("registered_at")
+            .HasColumnType("timestamp")
+            .IsRequired();
         
         builder.HasOne(eu => eu.Event)
             .WithMany(e => e.EventUsers)
