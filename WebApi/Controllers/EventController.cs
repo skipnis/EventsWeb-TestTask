@@ -21,7 +21,7 @@ public class EventController : ControllerBase
     [HttpGet("short/{id}")]
     public async Task<IActionResult> GetShortById(Guid id)
     {
-        var query = new GetEventShortInfoQuery(id);
+        var query = new GetEventShortInfoByIdQuery(id);
         var eventShortInfo = await _mediator.Send(query);
         return Ok(eventShortInfo); 
     }

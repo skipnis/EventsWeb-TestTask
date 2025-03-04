@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Queries;
 
-public class GetEventShortInfoQuery : IRequest<EventShortDto>, IRequest<Guid>
+public class GetEventFullInfoByIdQuery : IRequest<EventFullDto>
 {
     public Guid Id { get; set; }
 
-    public GetEventShortInfoQuery(Guid id)
+    public GetEventFullInfoByIdQuery(Guid id)
     {
         Id = id;
     }
