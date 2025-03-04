@@ -28,7 +28,7 @@ public class UserRepository : IUserRepository
         return await _users.FindAsync(id);
     }
 
-    public async Task<IEnumerable<User>> GetPaginatedAsync(int pageNumber, int pageSize)
+    public async Task<List<User>> GetPaginatedAsync(int pageNumber, int pageSize)
     {
         return await _users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }

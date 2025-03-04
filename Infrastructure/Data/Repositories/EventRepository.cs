@@ -14,7 +14,7 @@ public class EventRepository : IEventRepository
     }
 
     public async Task AddAsync(Event entity)
-    {
+    {  
         await _events.AddAsync(entity);
     }
 
@@ -28,7 +28,7 @@ public class EventRepository : IEventRepository
         return await _events.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Event>> GetPaginatedAsync(int pageNumber, int pageSize)
+    public async Task<List<Event>> GetPaginatedAsync(int pageNumber, int pageSize)
     {
         return await _events.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
