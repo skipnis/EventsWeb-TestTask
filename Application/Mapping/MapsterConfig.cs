@@ -27,9 +27,9 @@ public class MapsterConfig
             .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
             .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
 
-        TypeAdapterConfig<Event, EventShortDto>.NewConfig()
-            .Map(dest => dest.Name, src => src.Title)
-            .Map(dest => dest.Date, src => src.Date.ToString("yyyy-MM-dd HH:mm"))
+        TypeAdapterConfig<Event, EventPreviewDto>.NewConfig()
+            .Map(dest => dest.Title, src => src.Title)
+            .Map(dest => dest.DateOnly, src => DateOnly.FromDateTime(src.Date))
             .Map(dest => dest.Place, src => src.Place.Name + ", " + src.Place.Address );
 
         TypeAdapterConfig<Event, EventFullDto>.NewConfig()
@@ -38,6 +38,7 @@ public class MapsterConfig
             .Map(dest => dest.Date, src => src.Date.ToString("yyyy-MM-dd HH:mm"))
             .Map(dest => dest.ImageUrl, src => src.ImageUrl)
             .Map(dest => dest.Place, src => src.Place.Name + ", " + src.Place.Address )
+            .Map(dest=>dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Category, src => src.Category.Name);
 
         TypeAdapterConfig<EventCreateDto, Event>.NewConfig()
@@ -53,8 +54,8 @@ public class MapsterConfig
             .Map(dest => dest.FullName, src => src.FirstName + " " + src.LastName)
             .Map(dest => dest.Email, src => src.Email)
             .Map(dest => dest.Events, src => src.EventUsers != null && src.EventUsers.Any()
-                ? src.EventUsers.Select(eu => eu.Event).Adapt<IEnumerable<EventShortDto>>()
-                : new List<EventShortDto>());
+                ? src.EventUsers.Select(eu => eu.Event).Adapt<IEnumerable<EventPreviewDto>>()
+                : new List<EventPreviewDto>());
         
         TypeAdapterConfig<UserRegistrationDto, User>.NewConfig()
             .Map(dest => dest.FirstName, src => src.FirstName)

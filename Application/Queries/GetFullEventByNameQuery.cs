@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Queries;
 
-public class GetEventFullInfoByNameQuery : IRequest<EventFullDto>
+public class GetFullEventByNameQuery : IRequest<EventFullDto>
 {
     public string Name {get; set;}
 
-    public GetEventFullInfoByNameQuery(string name)
+    public GetFullEventByNameQuery(string name)
     {
         Name = name;
     }

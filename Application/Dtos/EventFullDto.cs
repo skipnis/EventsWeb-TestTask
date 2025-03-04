@@ -10,5 +10,7 @@ public class EventFullDto
     public string Place { get; set; }
     public string Category { get; set; }
     public string Date { get; set; }
+    public int MaximumParticipants { get; set; }
     public string? ImageUrl { get; set; }
+    
 }

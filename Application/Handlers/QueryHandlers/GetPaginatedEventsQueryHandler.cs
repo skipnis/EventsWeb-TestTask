@@ -7,18 +7,18 @@ using MediatR;
 
 namespace Application.Handlers.QueryHandlers;
 
-public class GetAllEventsPaginatedQueryHandler : IRequestHandler<GetAllEventsPaginatedQuery, List<EventFullDto>>
+public class GetPaginatedEventsQueryHandler : IRequestHandler<GetPaginatedEventsQuery, List<EventFullDto>>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetAllEventsPaginatedQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetPaginatedEventsQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<List<EventFullDto>> Handle(GetAllEventsPaginatedQuery request, CancellationToken cancellationToken)
+    public async Task<List<EventFullDto>> Handle(GetPaginatedEventsQuery request, CancellationToken cancellationToken)
     {
         var events = await _unitOfWork.EventRepository.GetPaginatedAsync(request.PageNumber, request.PageSize);
         return _mapper.Map<List<EventFullDto>>(events);

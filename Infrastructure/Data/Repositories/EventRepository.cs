@@ -23,6 +23,11 @@ public class EventRepository : IEventRepository
         return await _events.ToListAsync();
     }
 
+    public Task<IQueryable<Event>> GetAllAsQueryableAsync()
+    {
+        return Task.FromResult(_events.AsQueryable());
+    }
+
     public async Task<Event> GetById(Guid id)
     {
         return await _events.FindAsync(id);

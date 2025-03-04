@@ -7,18 +7,18 @@ using MediatR;
 
 namespace Application.Handlers.QueryHandlers;
 
-public class GetEventFullInfoByIdQueryHandler : IRequestHandler<GetEventFullInfoByIdQuery, EventFullDto>
+public class GetFullEventByIdQueryHandler : IRequestHandler<GetFullEventByIdQuery, EventFullDto>
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public GetEventFullInfoByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
+    public GetFullEventByIdQueryHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
-    public async Task<EventFullDto> Handle(GetEventFullInfoByIdQuery request, CancellationToken cancellationToken)
+    public async Task<EventFullDto> Handle(GetFullEventByIdQuery request, CancellationToken cancellationToken)
     {
         var eventEntity = await _unitOfWork.EventRepository.GetById(request.Id);
         if(eventEntity == null) throw new Exception("$Event with id {request.Id} does not exist");
