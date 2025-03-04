@@ -19,6 +19,7 @@ public static class InfrastructureServiceRegistration
         
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IEventUserRepository, EventUserRepository>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 

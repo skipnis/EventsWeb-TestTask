@@ -7,7 +7,6 @@ public class EventUpdateDto
     public int MaximumParticipants { get; set; }
     public DateTime Date { get; set; }
     public string ImageUrl { get; set; }
-    
     public PlaceDto Place { get; set; }
     public CategoryDto Category { get; set; }
 }

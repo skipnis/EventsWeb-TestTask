@@ -6,11 +6,9 @@ namespace Application.Events;
 public class EventUpdated : IEvent
 {
     public Guid EventId { get; set; }
-    public IEnumerable<User> Users { get; set; }
 
-    public EventUpdated(Guid eventId, IEnumerable<User> users)
+    public EventUpdated(Guid eventId)
     {
         EventId = eventId;
-        Users = users;
     }
 }

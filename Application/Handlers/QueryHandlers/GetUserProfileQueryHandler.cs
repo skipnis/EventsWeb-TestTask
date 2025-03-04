@@ -24,9 +24,9 @@ public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, U
         
         if (user == null)
         {
-            throw new KeyNotFoundException($"User with ID {request.Id} not found.");
+            throw new Exception($"User with ID {request.Id} not found.");
         }
-
+        
         return _mapper.Map<UserProfileDto>(user);
     }
 }

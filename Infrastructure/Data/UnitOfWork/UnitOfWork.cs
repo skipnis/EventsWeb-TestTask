@@ -10,16 +10,19 @@ public class UnitOfWork : IUnitOfWork
     private IDbContextTransaction _transaction;
     private readonly IEventRepository _eventRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IEventUserRepository _eventUserRepository;
 
-    public UnitOfWork(ApplicationDbContext context, IEventRepository eventRepository, IUserRepository userRepository)
+    public UnitOfWork(ApplicationDbContext context, IEventRepository eventRepository, IUserRepository userRepository, IEventUserRepository eventUserRepository)
     {
         _context = context;
         _eventRepository = eventRepository;
         _userRepository = userRepository;
+        _eventUserRepository = eventUserRepository;
     }
-    
+
     public IEventRepository EventRepository => _eventRepository;
     public IUserRepository UserRepository => _userRepository;
+    public IEventUserRepository EventUserRepository => _eventUserRepository;
 
     public async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {

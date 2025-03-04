@@ -23,14 +23,19 @@ public class EventUpdatedHandler : INotificationHandler<EventUpdated>
         var eventEntity = await _unitOfWork.EventRepository.GetById(notification.EventId);
         
         if (eventEntity == null)
-            return;
+            throw new Exception("Event not found");
         
-        var usersToNotify = notification.Users;
-        
-        foreach (var user in usersToNotify)
+        var usersToNotify = eventEntity.EventUsers?
+            .Where(x => x.User != null)
+            .Select(x => x.User).ToList();
+
+        if (usersToNotify != null && usersToNotify.Any())
         {
-            var message = _emailContentGenerator.GenerateEventUpdateContent(user.FirstName, eventEntity.Title);
-            await _emailService.SendEmailAsync(user.Email, "Event Update Notification", message);
+            foreach (var user in usersToNotify)
+            {
+                var message = _emailContentGenerator.GenerateEventUpdateContent(user.FirstName, eventEntity.Title);
+                await _emailService.SendEmailAsync(user.Email, "Event Update Notification", message);
+            }
         }
     }
 }

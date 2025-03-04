@@ -7,5 +7,5 @@ public class User : BaseEntity<Guid>
     public string Email { get; set; }
     public string PasswordHash { get; set; }
     public DateOnly BirthDate { get; set; }
-    public ICollection<EventUser> EventUsers { get; set; }
+    public ICollection<EventUser>? EventUsers { get; set; }
 }
