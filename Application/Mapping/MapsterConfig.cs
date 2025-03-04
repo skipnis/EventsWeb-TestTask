@@ -52,10 +52,7 @@ public class MapsterConfig
 
         TypeAdapterConfig<User, UserProfileDto>.NewConfig()
             .Map(dest => dest.FullName, src => src.FirstName + " " + src.LastName)
-            .Map(dest => dest.Email, src => src.Email)
-            .Map(dest => dest.Events, src => src.EventUsers != null && src.EventUsers.Any()
-                ? src.EventUsers.Select(eu => eu.Event).Adapt<IEnumerable<EventPreviewDto>>()
-                : new List<EventPreviewDto>());
+            .Map(dest => dest.Email, src => src.Email);
         
         TypeAdapterConfig<UserRegistrationDto, User>.NewConfig()
             .Map(dest => dest.FirstName, src => src.FirstName)

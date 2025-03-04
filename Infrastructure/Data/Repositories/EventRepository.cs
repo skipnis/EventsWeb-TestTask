@@ -53,4 +53,15 @@ public class EventRepository : IEventRepository
     {
         return await _events.FindAsync(name);
     }
+
+    public async Task<IEnumerable<User>?> GetParticipants(Guid eventId)
+    {
+        var participants = await _events
+            .Where(e=>e.Id == eventId)
+            .SelectMany(e=> e.EventUsers)
+            .Select(e=>e.User)
+            .ToListAsync();
+        
+        return participants;
+    }
 }

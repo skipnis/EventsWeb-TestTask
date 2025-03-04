@@ -49,6 +49,16 @@ public class UserRepository : IUserRepository
         _users.Remove(entity);
     }
 
+    public async Task<IEnumerable<Event>?> GetUserEvents(Guid userId)
+    {
+        var events = await _users
+            .Where(u => u.Id == userId) 
+            .SelectMany(u => u.EventUsers)  
+            .Select(eu => eu.Event)  
+            .ToListAsync();
+        return events;
+    }
+
     public async Task<User> GetByName(string name)
     {
         return await _users.FindAsync(name);

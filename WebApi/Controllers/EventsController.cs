@@ -122,4 +122,12 @@ public class EventsController : ControllerBase
         }
         return NotFound(new { Message = "Registration not found or cannot be canceled" });
     }
+
+    [HttpGet("{id}/participants")]
+    public async Task<IActionResult> GetParticipants([FromRoute] Guid id)
+    {
+        var query = new GetEventParticipantsQuery(id);
+        var participants = await _mediator.Send(query);
+        return Ok(participants);
+    }
 }

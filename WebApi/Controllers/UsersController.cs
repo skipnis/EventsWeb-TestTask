@@ -16,11 +16,18 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("profile/{id}")]
-    public async Task<IActionResult> GetProfile(Guid id)
+    public async Task<IActionResult> GetProfile([FromRoute] Guid id)
     {
         var query = new GetUserProfileQuery(id);
         var userProfileDto = await _mediator.Send(query);
         return Ok(userProfileDto);
     }
-    
+
+    [HttpGet("{id}/events")]
+    public async Task<IActionResult> GetEvents([FromRoute] Guid id)
+    {
+        var query = new GetUserEventsQuery(id);
+        var events = await _mediator.Send(query);
+        return Ok(events);
+    }
 }
