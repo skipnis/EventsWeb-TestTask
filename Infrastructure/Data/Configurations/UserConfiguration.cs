@@ -17,6 +17,12 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
             .HasColumnType("uuid")
             .ValueGeneratedOnAdd();
         
+        builder.Property(u=>u.UserName)
+            .HasColumnName("user_name")
+            .HasColumnType("varchar(255)")
+            .HasMaxLength(255)
+            .IsRequired();
+        
         builder.Property(u => u.FirstName)
             .HasColumnName("first_name")
             .HasColumnType("varchar(100)")

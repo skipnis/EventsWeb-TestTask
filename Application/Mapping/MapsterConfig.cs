@@ -55,10 +55,11 @@ public class MapsterConfig
             .Map(dest => dest.Email, src => src.Email);
         
         TypeAdapterConfig<UserRegistrationDto, User>.NewConfig()
+            .Map(dest => dest.UserName, src=>src.UserName)
             .Map(dest => dest.FirstName, src => src.FirstName)
             .Map(dest => dest.LastName, src => src.LastName)
             .Map(dest => dest.Email, src => src.Email)
-            .Map(dest => dest.PasswordHash, src => src.PasswordHash)
+            .Map(dest => dest.PasswordHash, src => src.Password)
             .Map(dest => dest.BirthDate, src => src.BirthDate);
         
         TypeAdapterConfig<UserUpdateDto, User>.NewConfig()

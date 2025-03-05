@@ -1,3 +1,5 @@
+using Application.Commands.UserCommands;
+using Application.Dtos;
 using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

@@ -1,10 +1,12 @@
 using Core.Enities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, Guid>
 {
     private readonly IConfiguration _configuration;
     
@@ -14,7 +16,6 @@ public class ApplicationDbContext : DbContext
     }
     
     public DbSet<Event> Events { get; set; }
-    public DbSet<User> Users { get; set; }
     public DbSet<EventUser> EventUsers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

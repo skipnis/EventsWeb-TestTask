@@ -3,6 +3,7 @@ using Application.Commands.UserCommands;
 using Application.Dtos;
 using Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -101,6 +102,7 @@ public class EventsController : ControllerBase
         return Ok(new { eventId }); 
     }
 
+    [Authorize(Policy = "AdminPolicy")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteEvent([FromRoute] Guid id)
     {
@@ -123,6 +125,7 @@ public class EventsController : ControllerBase
         return NotFound(new { Message = "Registration not found or cannot be canceled" });
     }
 
+    [Authorize(Policy = "AdminPolicy")]
     [HttpGet("{id}/participants")]
     public async Task<IActionResult> GetParticipants([FromRoute] Guid id)
     {
