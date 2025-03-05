@@ -25,9 +25,7 @@ public class EventUpdatedHandler : INotificationHandler<EventUpdated>
         if (eventEntity == null)
             throw new Exception("Event not found");
         
-        var usersToNotify = eventEntity.EventUsers?
-            .Where(x => x.User != null)
-            .Select(x => x.User).ToList();
+        var usersToNotify = await _unitOfWork.EventRepository.GetParticipants(notification.EventId);
 
         if (usersToNotify != null && usersToNotify.Any())
         {
