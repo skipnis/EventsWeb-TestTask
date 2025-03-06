@@ -56,11 +56,11 @@ public class AuthController : ControllerBase
         var response = await _mediator.Send(command);
         return Ok(response);
     }
-
+    
     [HttpPost("assign-role")]
-    public async Task<IActionResult> AssignAdminRole([FromBody] Guid userId)
+    public async Task<IActionResult> AssignRole([FromBody] RoleAssignmentRequest request)
     {
-        var command = new AssignAdminRoleCommand(userId);
+        var command = new AssignRoleCommand(request);
         var result = await _mediator.Send(command);
         if (result)
         {
