@@ -50,6 +50,12 @@ builder.Services.AddAuthorization(options =>
     
     options.AddPolicy("EventOwnerPolicy", policy =>
         policy.RequireRole("EventOwner"));
+    
+    options.AddPolicy("AdminOrEventOwnerPolicy", policy =>
+    {
+        policy.RequireAssertion(context =>
+            context.User.IsInRole("Admin") || context.User.IsInRole("EventOwner"));
+    });
 });
 
 builder.Services.AddControllers();  

@@ -1,6 +1,3 @@
-using Core.Enities;
-using Core.ValueObjects;
-
 namespace Application.Dtos;
 
 public class EventFullDto

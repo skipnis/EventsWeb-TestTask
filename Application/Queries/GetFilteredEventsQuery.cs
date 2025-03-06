@@ -1,5 +1,4 @@
 using Application.Dtos;
-using Core.Enities;
 using MediatR;
 
 namespace Application.Queries;

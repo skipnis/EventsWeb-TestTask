@@ -1,6 +1,5 @@
 using Application.Commands.UserCommands;
 using Application.Interfaces;
-using Core.Interfaces;
 using MapsterMapper;
 using MediatR;
 

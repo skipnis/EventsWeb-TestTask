@@ -1,8 +1,6 @@
-using Application.Commands.UserCommands;
+using Application.Commands.AuthCommands;
 using Application.Dtos;
 using Application.Interfaces;
-using Core.Interfaces;
-using MapsterMapper;
 using MediatR;
 
 namespace Application.Handlers.CommandHandlers;

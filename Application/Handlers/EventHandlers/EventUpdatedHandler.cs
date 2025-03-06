@@ -1,6 +1,5 @@
 using Application.Events;
 using Application.Interfaces;
-using Core.Interfaces;
 using MediatR;
 
 namespace Application.Handlers.EventHandlers;

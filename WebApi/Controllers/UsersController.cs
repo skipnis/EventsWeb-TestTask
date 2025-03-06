@@ -1,7 +1,6 @@
-using Application.Commands.UserCommands;
-using Application.Dtos;
 using Application.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace WebApi.Controllers;
@@ -25,6 +24,7 @@ public class UsersController : ControllerBase
         return Ok(userProfileDto);
     }
 
+    [Authorize]
     [HttpGet("{id}/events")]
     public async Task<IActionResult> GetEvents([FromRoute] Guid id)
     {

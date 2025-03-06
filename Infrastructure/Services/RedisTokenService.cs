@@ -1,6 +1,4 @@
 using Application.Interfaces;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 using StackExchange.Redis;
 
 namespace Infrastructure.Services;

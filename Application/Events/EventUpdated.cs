@@ -1,5 +1,4 @@
 using Application.Interfaces;
-using Core.Enities;
 
 namespace Application.Events;
 

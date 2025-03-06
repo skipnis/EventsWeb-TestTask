@@ -1,6 +1,5 @@
 using Application.Dtos;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 
 namespace Application.Commands.EventCommands;
 

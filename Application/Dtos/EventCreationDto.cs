@@ -1,5 +1,3 @@
-using Core.ValueObjects;
-
 namespace Application.Dtos;
 
 public class EventCreationDto

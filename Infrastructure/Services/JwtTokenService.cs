@@ -4,7 +4,6 @@ using System.Text;
 using Application.Dtos;
 using Application.Interfaces;
 using Core.Enities;
-using Core.Interfaces;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;

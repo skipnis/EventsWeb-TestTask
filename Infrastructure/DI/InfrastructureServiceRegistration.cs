@@ -6,7 +6,6 @@ using Infrastructure.Data.Repositories;
 using Infrastructure.Data.UnitOfWork;
 using Infrastructure.Identity;
 using Infrastructure.Services;
-using Infrastructure.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;

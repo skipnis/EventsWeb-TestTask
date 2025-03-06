@@ -1,4 +1,4 @@
-using Application.Commands.UserCommands;
+using Application.Commands.AuthCommands;
 using Application.Interfaces;
 using MediatR;
 

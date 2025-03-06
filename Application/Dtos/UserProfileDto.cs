@@ -1,5 +1,3 @@
-using Core.Enities;
-
 namespace Application.Dtos;
 
 public class UserProfileDto

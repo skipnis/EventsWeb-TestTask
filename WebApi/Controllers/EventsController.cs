@@ -79,6 +79,7 @@ public class EventsController : ControllerBase
         return Ok(events);
     }
     
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] EventCreationDto dto)
     {
@@ -87,6 +88,7 @@ public class EventsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = eventId }, eventId);
     }
     
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEvent([FromRoute] Guid id, [FromBody] EventUpdateDto dto)
     {
@@ -95,6 +97,7 @@ public class EventsController : ControllerBase
         return Ok(new { eventId }); 
     }
 
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpPost("{id}/photo")]
     public async Task<IActionResult> AddPhoto([FromRoute] Guid id, [FromForm] AddEventImageDto dto)
     {
@@ -103,6 +106,7 @@ public class EventsController : ControllerBase
         return Ok(new { path });
     }
     
+    [Authorize]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterUserForEvent([FromBody] RegisterUserForEventCommand command)
     {
@@ -110,7 +114,7 @@ public class EventsController : ControllerBase
         return Ok(new { EventId = eventId });
     }
 
-    [Authorize(Policy = "AdminPolicy")]
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteEvent([FromRoute] Guid id)
     {
@@ -133,7 +137,7 @@ public class EventsController : ControllerBase
         return NotFound(new { Message = "Registration not found or cannot be canceled" });
     }
 
-    [Authorize(Policy = "AdminPolicy")]
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpGet("{id}/participants")]
     public async Task<IActionResult> GetParticipants([FromRoute] Guid id)
     {

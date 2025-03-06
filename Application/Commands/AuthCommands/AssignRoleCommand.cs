@@ -1,7 +1,7 @@
 using Application.Dtos;
 using MediatR;
 
-namespace Application.Commands.UserCommands;
+namespace Application.Commands.AuthCommands;
 
 public class AssignRoleCommand : IRequest<bool>
 {

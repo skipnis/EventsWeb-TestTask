@@ -1,7 +1,5 @@
 using Application.Interfaces;
-using Infrastructure.Data.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Infrastructure.Identity;
 

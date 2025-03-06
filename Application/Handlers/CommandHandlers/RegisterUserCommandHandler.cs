@@ -1,7 +1,6 @@
-using Application.Commands.UserCommands;
+using Application.Commands.AuthCommands;
 using Application.Interfaces;
 using Core.Enities;
-using Core.Interfaces;
 using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Identity;

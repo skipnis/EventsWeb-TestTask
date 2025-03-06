@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Application.Commands.UserCommands;
+namespace Application.Commands.AuthCommands;
 
 public class LogoutCommand : IRequest<bool>
 {

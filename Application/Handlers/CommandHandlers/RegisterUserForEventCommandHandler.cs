@@ -1,8 +1,6 @@
-using System.Numerics;
 using Application.Commands.UserCommands;
 using Application.Interfaces;
 using Core.Enities;
-using Core.Interfaces;
 using MediatR;
 
 namespace Application.Handlers.CommandHandlers;

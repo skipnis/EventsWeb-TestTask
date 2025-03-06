@@ -1,7 +1,6 @@
 using Application.Dtos;
 using Application.Interfaces;
 using Application.Queries;
-using Core.Enities;
 using MapsterMapper;
 using MediatR;
 

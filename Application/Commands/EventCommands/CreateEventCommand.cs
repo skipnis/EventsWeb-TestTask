@@ -1,5 +1,4 @@
 using Application.Dtos;
-using Application.Interfaces;
 using MediatR;
 
 namespace Application.Commands.EventCommands;
