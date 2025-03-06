@@ -1,19 +1,11 @@
 using System.Text;
-using Application;
 using Application.DI;
-using Application.Interfaces;
-using Core.Enities;
-using Infrastructure;
-using Infrastructure.Data;
 using Infrastructure.DI;
-using Infrastructure.Services;
+using Infrastructure.Identity;
 using Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using StackExchange.Redis;
 using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,7 +44,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "My API", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "EventsWEbApi", Version = "v1" });
     
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -61,7 +53,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Введите 'Bearer [ваш токен]' без кавычек"
+        Description = "Введите 'Bearer токен без кавычек"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
@@ -80,11 +72,20 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.AddLogging();
+
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleSeeder = scope.ServiceProvider.GetRequiredService<RoleSeeder>();
+    await roleSeeder.SeedRolesAsync();
+}
 
 app.Use(async (context, next) =>
 {
-    Console.WriteLine($"Request: {context.Request.Method} {context.Request.Path}");
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    logger.LogInformation($"Request: {context.Request.Method} {context.Request.Path}");
     await next.Invoke();
 });
 
@@ -101,7 +102,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI(c =>
     {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API v1");
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "EventsWebApi");
     });
 }
 

@@ -4,6 +4,7 @@ using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Infrastructure.Data.UnitOfWork;
+using Infrastructure.Identity;
 using Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -27,13 +28,14 @@ public static class InfrastructureServiceRegistration
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
-       
+        
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IEventUserRepository, EventUserRepository>();
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, JwtTokenService>();
+        services.AddScoped<RoleSeeder>();
         services.AddSingleton<IRedisTokenService, RedisTokenService>();
         
         return services;

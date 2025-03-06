@@ -1,10 +1,11 @@
 using Application.Commands.UserCommands;
 using Application.Interfaces;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 
 namespace Application.Handlers.CommandHandlers;
 
-public class AssignAdminRoleCommandHandler : IRequestHandler<AssignAdminRoleCommand>
+public class AssignAdminRoleCommandHandler : IRequestHandler<AssignAdminRoleCommand, bool>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -13,7 +14,7 @@ public class AssignAdminRoleCommandHandler : IRequestHandler<AssignAdminRoleComm
         _unitOfWork = unitOfWork;
     }
 
-    public async Task Handle(AssignAdminRoleCommand request, CancellationToken cancellationToken)
+    public async Task<bool> Handle(AssignAdminRoleCommand request, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.UserManager.FindByIdAsync(request.UserId.ToString());
         
@@ -22,11 +23,17 @@ public class AssignAdminRoleCommandHandler : IRequestHandler<AssignAdminRoleComm
             throw new Exception("User not found");
         }
         
-        var result = await _unitOfWork.UserManager.AddToRoleAsync(user, "Admin");
+        if (!await _unitOfWork.RoleManager.RoleExistsAsync("Admin"))
+        {
+            throw new Exception("Role not found");
+        }
+        
+        var result = await _unitOfWork.UserManager.AddToRoleAsync(user, "Admin");   
         
         if (!result.Succeeded)
         {
             throw new Exception("Failed to assign Admin role");
         }
+        return true;
     }
 }

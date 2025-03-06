@@ -12,12 +12,10 @@ namespace WebApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly IMediator _mediator;
-    private readonly IRedisTokenService _redisTokenService;
 
-    public AuthController(IMediator mediator, IRedisTokenService redisTokenService)
+    public AuthController(IMediator mediator)
     {
         _mediator = mediator;
-        _redisTokenService = redisTokenService;
     }
     
     [HttpPost("register")]
@@ -51,11 +49,23 @@ public class AuthController : ControllerBase
     }
     
     [Authorize]
-    [HttpPost("refresh")]
+    [HttpPost("refresh-token")]
     public async Task<IActionResult> RefreshAccessToken([FromBody] RefreshAccessTokenDto dto)
     {
         var command = new RefreshAccessTokenCommand(dto);
         var response = await _mediator.Send(command);
         return Ok(response);
+    }
+
+    [HttpPost("assign-role")]
+    public async Task<IActionResult> AssignAdminRole([FromBody] Guid userId)
+    {
+        var command = new AssignAdminRoleCommand(userId);
+        var result = await _mediator.Send(command);
+        if (result)
+        {
+            return Ok(new { message = "Role assigned successfully." });
+        }
+        return BadRequest(new { message = "Failed to assign role" });
     }
 }
