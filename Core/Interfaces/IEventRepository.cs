@@ -8,5 +8,5 @@ public interface IEventRepository : IRepository<Event>
     
     public Task<IEnumerable<User>?> GetParticipants(Guid eventId);
 
-    public Task SetPhoto(Guid eventId, string imageUrl);
+    public Task AddImage(Guid eventId, string imageUrl);
 }

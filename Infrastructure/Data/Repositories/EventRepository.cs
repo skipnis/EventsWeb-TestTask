@@ -65,7 +65,7 @@ public class EventRepository : IEventRepository
         return participants;
     }
 
-    public async Task SetPhoto(Guid eventId, string imageUrl)
+    public async Task AddImage(Guid eventId, string imageUrl)
     {
         var eventEntity = _events.Find(eventId);
         eventEntity.SetImageUrl(imageUrl);
