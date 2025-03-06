@@ -57,7 +57,8 @@ public class JwtTokenService : ITokenService
     public Task<string> GenerateRefreshToken(User user)
     {
         var refreshToken =  Guid.NewGuid().ToString();
-        _redisTokenService.StoreRefreshToken(user.Id.ToString(), refreshToken, TimeSpan.FromDays(7));
+        var expirationTime = _jwtSettings.RefreshTokenExpirationInMinutes;
+        _redisTokenService.StoreRefreshToken(user.Id.ToString(), refreshToken, TimeSpan.FromDays(expirationTime));
 
         return Task.FromResult(refreshToken);
     }
