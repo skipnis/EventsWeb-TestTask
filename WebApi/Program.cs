@@ -1,9 +1,11 @@
 using System.Text;
 using Application;
+using Application.DI;
 using Application.Interfaces;
 using Core.Enities;
 using Infrastructure;
 using Infrastructure.Data;
+using Infrastructure.DI;
 using Infrastructure.Services;
 using Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

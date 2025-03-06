@@ -1,11 +1,8 @@
 using Application.Interfaces;
-using Application.Mapping;
 using Application.Utils;
-using Mapster;
-using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Application.DI;
 
 public static class ApplicationServiceRegistration
 {

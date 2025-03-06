@@ -3,7 +3,7 @@ using Mapster;
 using MapsterMapper;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Application;
+namespace Application.DI;
 
 public static class MapsterServiceRegistration
 {

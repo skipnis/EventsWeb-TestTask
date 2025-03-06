@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 
-namespace Infrastructure;
+namespace Infrastructure.DI;
 
 public static class InfrastructureServiceRegistration
 {
