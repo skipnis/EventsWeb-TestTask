@@ -6,6 +6,7 @@ using Infrastructure.Data.Repositories;
 using Infrastructure.Data.UnitOfWork;
 using Infrastructure.Identity;
 using Infrastructure.Services;
+using Infrastructure.Settings;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +25,7 @@ public static class InfrastructureServiceRegistration
         var redisConnectionString = configuration.GetSection("RedisSettings")["ConnectionString"];
         var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
         services.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
-
+        
         services.AddIdentityCore<User>()
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -35,6 +36,7 @@ public static class InfrastructureServiceRegistration
         services.AddScoped<IEmailService, EmailService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<ITokenService, JwtTokenService>();
+        services.AddScoped<IFileStorageService, FileStorageService>();
         services.AddScoped<RoleSeeder>();
         services.AddSingleton<IRedisTokenService, RedisTokenService>();
         

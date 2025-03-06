@@ -18,7 +18,7 @@ public class EventsController : ControllerBase
     {
         _mediator = mediator;
     }
-    
+
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById([FromRoute] Guid id)
     {
@@ -87,19 +87,27 @@ public class EventsController : ControllerBase
         return CreatedAtAction(nameof(GetById), new { id = eventId }, eventId);
     }
     
-    [HttpPost("register")]
-    public async Task<IActionResult> RegisterUserForEvent([FromBody] RegisterUserForEventCommand command)
-    {
-        var eventId = await _mediator.Send(command);
-        return Ok(new { EventId = eventId });
-    }
-    
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateEvent([FromRoute] Guid id, [FromBody] EventUpdateDto dto)
     {
         var command = new UpdateEventCommand(id, dto);
         var eventId = await _mediator.Send(command);
         return Ok(new { eventId }); 
+    }
+
+    [HttpPost("{id}/photo")]
+    public async Task<IActionResult> AddPhoto([FromRoute] Guid id, [FromForm] AddEventImageDto dto)
+    {
+        var command = new AddEventImageCommand(id, dto);
+        var path = await _mediator.Send(command);
+        return Ok(new { path });
+    }
+    
+    [HttpPost("register")]
+    public async Task<IActionResult> RegisterUserForEvent([FromBody] RegisterUserForEventCommand command)
+    {
+        var eventId = await _mediator.Send(command);
+        return Ok(new { EventId = eventId });
     }
 
     [Authorize(Policy = "AdminPolicy")]

@@ -10,6 +10,11 @@ public class Event : BaseEntity<Guid>
     public Category Category { get; set; }
     public int MaximumParticipants { get; set; }
     public DateTime Date { get; set; }
-    public string ImageUrl { get; set; }
+    public string ImageUrl { get; private set; } = string.Empty;
     public ICollection<EventUser>? EventUsers { get; set; }
+    
+    public void SetImageUrl(string imageUrl)
+    {
+        ImageUrl = imageUrl;
+    }
 }

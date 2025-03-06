@@ -14,7 +14,6 @@ public class MapsterConfig
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date)
-            .Map(dest => dest.ImageUrl, src => src.ImageUrl)
             .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
             .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
         
@@ -23,7 +22,6 @@ public class MapsterConfig
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date.ToUniversalTime())
-            .Map(dest => dest.ImageUrl, src => src.ImageUrl)
             .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
             .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
 
@@ -46,7 +44,6 @@ public class MapsterConfig
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Date, src => src.Date.ToUniversalTime())
-            .Map(dest => dest.ImageUrl, src => src.ImageUrl)
             .Map(dest => dest.Place, src => new PlaceDto { Name = src.Place.Name, Address = src.Place.Address })
             .Map(dest => dest.Category, src => new CategoryDto { Name = src.Category.Name });
 
