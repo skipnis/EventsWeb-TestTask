@@ -80,7 +80,7 @@ public class EventsController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> CreateEvent([FromBody] EventCreateDto dto)
+    public async Task<IActionResult> CreateEvent([FromBody] EventCreationDto dto)
     {
         var command = new CreateEventCommand(dto);
         var eventId = await _mediator.Send(command);

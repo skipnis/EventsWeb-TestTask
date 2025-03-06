@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using System.Net;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -32,6 +33,7 @@ public class ExceptionHandlingMiddleware
     {
         var response = context.Response;
         response.ContentType = "application/json";
+        
         response.StatusCode = exception switch
         {
             ArgumentException => (int)HttpStatusCode.BadRequest,

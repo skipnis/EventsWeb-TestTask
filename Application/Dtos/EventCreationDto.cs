@@ -2,7 +2,7 @@ using Core.ValueObjects;
 
 namespace Application.Dtos;
 
-public class EventCreateDto
+public class EventCreationDto
 {
     public string Title { get; set; }
     public string? Description { get; set; }

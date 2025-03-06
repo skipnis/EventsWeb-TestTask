@@ -1,5 +1,8 @@
+using Application.Dtos;
 using Application.Interfaces;
 using Application.Utils;
+using Application.Validators;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application.DI;

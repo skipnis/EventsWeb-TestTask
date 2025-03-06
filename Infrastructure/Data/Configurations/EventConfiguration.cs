@@ -25,7 +25,8 @@ public class EventConfiguration : IEntityTypeConfiguration<Event>
 
         builder.Property(e => e.Description)
             .HasColumnName("event_description")
-            .HasColumnType("text");
+            .HasColumnType("text")
+            .HasMaxLength(1000);
 
         builder.Property(e => e.ImageUrl)
             .HasColumnName("event_image_url")

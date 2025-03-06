@@ -1,6 +1,8 @@
 using Application.Commands.UserCommands;
 using Application.Dtos;
 using Application.Interfaces;
+using Core.Enities;
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

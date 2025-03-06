@@ -6,10 +6,10 @@ namespace Application.Commands.EventCommands;
 
 public class CreateEventCommand : IRequest<Guid>
 {
-    public EventCreateDto EventCreateDto { get; set; }
+    public EventCreationDto EventCreationDto { get; set; }
 
-    public CreateEventCommand(EventCreateDto eventCreateDto)
+    public CreateEventCommand(EventCreationDto eventCreationDto)
     {
-        EventCreateDto = eventCreateDto;
+        EventCreationDto = eventCreationDto;
     }
 }

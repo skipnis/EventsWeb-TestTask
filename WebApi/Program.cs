@@ -1,5 +1,9 @@
 using System.Text;
 using Application.DI;
+using Application.Dtos;
+using Application.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Infrastructure.DI;
 using Infrastructure.Identity;
 using Infrastructure.Settings;
@@ -10,6 +14,9 @@ using WebApi;
 using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(typeof(ApplicationServiceRegistration).Assembly);
 
 builder.Services.AddApplicationLayer();
 builder.Services.AddInfrastructureLayer(builder.Configuration);

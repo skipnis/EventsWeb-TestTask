@@ -37,6 +37,16 @@ public class RegisterUserForEventCommandHandler : IRequestHandler<RegisterUserFo
         {
             throw new Exception("User is already registered for this event");
         }
+
+        var participants = await _unitOfWork.EventRepository.GetParticipants(request.EventId);
+        if (participants != null)
+        {
+            var count =  participants.ToList().Count;
+            if (count == eventEntity.MaximumParticipants)
+            {
+                throw new Exception("Cannot register for event, because of the limit of participants");
+            }
+        }
         
         var eventUser = new EventUser
         {

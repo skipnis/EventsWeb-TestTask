@@ -39,7 +39,7 @@ public class MapsterConfig
             .Map(dest=>dest.MaximumParticipants, src => src.MaximumParticipants)
             .Map(dest => dest.Category, src => src.Category.Name);
 
-        TypeAdapterConfig<EventCreateDto, Event>.NewConfig()
+        TypeAdapterConfig<EventCreationDto, Event>.NewConfig()
             .Map(dest => dest.Title, src => src.Title)
             .Map(dest => dest.Description, src => src.Description)
             .Map(dest => dest.MaximumParticipants, src => src.MaximumParticipants)
