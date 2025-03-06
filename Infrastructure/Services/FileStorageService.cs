@@ -8,7 +8,6 @@ namespace Infrastructure.Services;
 public class FileStorageService : IFileStorageService
 {
     private readonly FileStorageSettings _settings;
-
     public FileStorageService(IOptions<FileStorageSettings> options)
     {
         _settings = options.Value;
@@ -16,6 +15,16 @@ public class FileStorageService : IFileStorageService
 
     public async Task<string> SaveFile(IFormFile file)
     {
+        if (!_settings.AllowedImageTypes.Contains(file.ContentType))
+        {
+            throw new InvalidOperationException("Invalid file format. Only image files are allowed.");
+        }
+        
+        if (file.Length > _settings.MaxFileSize)
+        {
+            throw new InvalidOperationException("File size exceeds the maximum allowed size of 50 MB.");
+        }
+        
         var fileName = $"{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
         var filePath = Path.Combine(_settings.Path, fileName);
         
