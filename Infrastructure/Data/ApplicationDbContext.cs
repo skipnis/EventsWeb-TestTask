@@ -28,4 +28,16 @@ public class ApplicationDbContext : IdentityDbContext<User, IdentityRole<Guid>, 
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
     }
+    
+    public void EnsureDatabaseCreated()
+    {
+        if (this.Database.GetPendingMigrations().Any())
+        {
+            this.Database.Migrate();
+        }
+        else
+        {
+            this.Database.EnsureCreated();
+        }
+    }
 }

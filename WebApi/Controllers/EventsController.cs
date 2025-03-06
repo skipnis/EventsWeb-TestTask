@@ -79,7 +79,6 @@ public class EventsController : ControllerBase
         return Ok(events);
     }
     
-    [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpPost]
     public async Task<IActionResult> CreateEvent([FromBody] EventCreationDto dto)
     {

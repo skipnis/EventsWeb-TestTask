@@ -4,3 +4,47 @@
     build:
       context: .
       dockerfile: WebApi/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - CONNECTION_STRING=Host=postgres;Port=5432;Database=eventsDb;Username=alexkipnis;Password=kipnisalex
+      - JWT_SECRET_KEY=a-string-secret-at-least-256-bits-long
+      - EMAIL_API_KEY=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
+      - REDIS_CONNECTION=redis:6379
+      - FILE_STORAGE_PATH=wwwroot/images
+    ports:
+      - "8080:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    networks:
+      - mynetwork
+
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: alexkipnis
+      POSTGRES_PASSWORD: kipnisalex
+      POSTGRES_DB: eventsDb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U alexkipnis -d eventsDb"]
+      interval: 10s
+      retries: 5
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis:latest
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  postgres_data:
+    driver: local

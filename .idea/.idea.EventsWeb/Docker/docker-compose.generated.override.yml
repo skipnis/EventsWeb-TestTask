@@ -1,0 +1,22 @@
+# This is a generated file. Not intended for manual editing.
+version: "3.4"
+services:
+  webapi:
+    build:
+      context: "/Users/kipnisalex/RiderProjects/EventsWeb"
+      dockerfile: "WebApi/Dockerfile"
+      target: "base"
+    command: []
+    entrypoint:
+    - "dotnet"
+    - "/app/bin/Debug/net8.0/WebApi.dll"
+    environment:
+      ASPNETCORE_STATICWEBASSETS: "/app/bin/Debug/net8.0/WebApi.staticwebassets.runtime.CT.json"
+      DOTNET_USE_POLLING_FILE_WATCHER: "true"
+    image: "webapi:dev"
+    ports: []
+    volumes:
+    - "/Users/kipnisalex/.nuget/packages:/root/.nuget/packages"
+    - "/Users/kipnisalex/RiderProjects/EventsWeb/WebApi:/app:rw"
+    - "/Users/kipnisalex/RiderProjects/EventsWeb:/src:rw"
+    working_dir: "/app"

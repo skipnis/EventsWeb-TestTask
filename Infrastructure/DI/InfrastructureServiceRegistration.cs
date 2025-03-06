@@ -22,7 +22,7 @@ public static class InfrastructureServiceRegistration
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         
         var redisConnectionString = configuration.GetSection("RedisSettings")["ConnectionString"];
-        var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString);
+        var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString + ",abortConnect=false");
         services.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
         
         services.AddIdentityCore<User>()

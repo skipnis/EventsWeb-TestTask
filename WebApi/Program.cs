@@ -4,10 +4,12 @@ using Application.Dtos;
 using Application.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using Infrastructure.Data;
 using Infrastructure.DI;
 using Infrastructure.Identity;
 using Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using WebApi;
@@ -97,6 +99,9 @@ var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
 {
+    var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    dbContext.EnsureDatabaseCreated(); 
+
     var roleSeeder = scope.ServiceProvider.GetRequiredService<RoleSeeder>();
     await roleSeeder.SeedRolesAsync();
 }
