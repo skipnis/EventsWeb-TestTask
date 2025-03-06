@@ -37,6 +37,9 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminPolicy", policy =>
         policy.RequireRole("Admin"));
+    
+    options.AddPolicy("EventOwnerPolicy", policy =>
+        policy.RequireRole("EventOwner"));
 });
 
 builder.Services.AddControllers();  
@@ -44,7 +47,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    options.SwaggerDoc("v1", new OpenApiInfo { Title = "EventsWEbApi", Version = "v1" });
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "EventsWebApi", Version = "v1" });
     
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -53,7 +56,7 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "Bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Введите 'Bearer токен без кавычек"
+        Description = "Введите Bearer токен без кавычек"
     });
 
     options.AddSecurityRequirement(new OpenApiSecurityRequirement

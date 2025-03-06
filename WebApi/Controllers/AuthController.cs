@@ -57,6 +57,7 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
     
+    [Authorize(Policy = "AdminPolicy")]
     [HttpPost("assign-role")]
     public async Task<IActionResult> AssignRole([FromBody] RoleAssignmentRequest request)
     {
