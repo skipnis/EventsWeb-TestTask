@@ -6,7 +6,7 @@
 
 ```git clone https://github.com/skipnis/EventsWeb-TestTask.git```
 
-2. Замените ApiKey в appsettings.json и docker-compose.yml ключ в для отправки email после обновлении события
+2. Замените ApiKey в appsettings.json и docker-compose.yml для отправки email после обновлении события
 
 ``"EmailServiceSettings": {
     "ApiKey": "",``
