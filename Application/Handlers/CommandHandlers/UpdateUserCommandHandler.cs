@@ -25,7 +25,7 @@ public class UpdateUserCommandHandler : IRequestHandler<UpdateUserCommand, Guid>
         }
         
         _mapper.Map(request.UserUpdateDto, user);
-        await _unitOfWork.UserRepository.UpdateAsync(user);
+        _unitOfWork.UserRepository.UpdateAsync(user);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return user.Id;

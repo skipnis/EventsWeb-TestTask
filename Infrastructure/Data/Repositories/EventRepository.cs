@@ -33,12 +33,12 @@ public class EventRepository : IEventRepository
         return await _events.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public async Task UpdateAsync(Event entity)
+    public void UpdateAsync(Event entity)
     { 
         _events.Update(entity);
     }
 
-    public async Task DeleteAsync(Event eventEntity)
+    public void DeleteAsync(Event eventEntity)
     {
         _events.Remove(eventEntity);
     }

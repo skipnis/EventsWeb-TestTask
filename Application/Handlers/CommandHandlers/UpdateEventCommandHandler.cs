@@ -26,7 +26,7 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, Gui
         }
         
         _mapper.Map(request.EventUpdateDto, eventEntity);
-        await _unitOfWork.EventRepository.UpdateAsync(eventEntity);
+        _unitOfWork.EventRepository.UpdateAsync(eventEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return eventEntity.Id;

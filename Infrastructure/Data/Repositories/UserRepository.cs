@@ -33,12 +33,12 @@ public class UserRepository : IUserRepository
         return await _users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
     }
 
-    public async Task UpdateAsync(User entity)
+    public void UpdateAsync(User entity)
     { 
         _users.Update(entity);
     }
 
-    public async Task DeleteAsync(User user)
+    public void DeleteAsync(User user)
     {
         _users.Remove(user);
     }

@@ -20,7 +20,7 @@ public class DeleteEventCommandHandler : IRequestHandler<DeleteEventCommand, boo
         {
             throw new Exception($"Event with id {request.Id} does not exist");
         }
-        await _unitOfWork.EventRepository.DeleteAsync(eventEntity);
+        _unitOfWork.EventRepository.DeleteAsync(eventEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         return true;
     }
