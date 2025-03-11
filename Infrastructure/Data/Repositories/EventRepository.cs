@@ -43,10 +43,9 @@ public class EventRepository : IEventRepository
         _events.Update(entity);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(Event eventEntity)
     {
-        var entity = await _events.FindAsync(id);
-        _events.Remove(entity);
+        _events.Remove(eventEntity);
     }
 
     public async Task<Event> GetByName(string name)

@@ -43,10 +43,9 @@ public class UserRepository : IUserRepository
         _users.Update(entity);
     }
 
-    public async Task DeleteAsync(Guid id)
+    public async Task DeleteAsync(User user)
     {
-        var entity = await _users.FindAsync(id);
-        _users.Remove(entity);
+        _users.Remove(user);
     }
 
     public async Task<IEnumerable<Event>?> GetUserEvents(Guid userId)
