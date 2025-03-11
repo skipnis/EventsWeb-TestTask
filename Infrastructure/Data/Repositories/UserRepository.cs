@@ -23,11 +23,6 @@ public class UserRepository : IUserRepository
         return await _users.ToListAsync();
     }
 
-    public Task<IQueryable<User>> GetAllAsQueryableAsync()
-    {
-        return Task.FromResult(_users.AsQueryable());
-    }
-
     public async Task<User> GetById(Guid id)
     {
         return await _users.FindAsync(id);

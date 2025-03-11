@@ -23,11 +23,6 @@ public class EventRepository : IEventRepository
         return await _events.ToListAsync();
     }
 
-    public Task<IQueryable<Event>> GetAllAsQueryableAsync()
-    {
-        return Task.FromResult(_events.AsQueryable());
-    }
-
     public async Task<Event> GetById(Guid id)
     {
         return await _events.FindAsync(id);
@@ -62,5 +57,15 @@ public class EventRepository : IEventRepository
             .ToListAsync();
         
         return participants;
+    }
+
+    public async Task<List<Event>> GetFilteredEvents(DateTime? dateFrom, DateTime? dateTo, List<string>? categories, List<string>? locations)
+    {
+        return await _events
+            .Where(e => !dateFrom.HasValue || e.Date >= dateFrom.Value)
+            .Where(e => !dateTo.HasValue || e.Date <= dateTo.Value)
+            .Where(e => categories == null || !categories.Any() || categories.Contains(e.Category.Name))
+            .Where(e => locations == null || !locations.Any() || locations.Contains(e.Place.Address))
+            .ToListAsync();
     }
 }
