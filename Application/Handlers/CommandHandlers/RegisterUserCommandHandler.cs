@@ -20,6 +20,20 @@ public class RegisterUserCommandHandler : IRequestHandler<RegisterUserCommand, G
 
     public async Task<Guid> Handle(RegisterUserCommand request, CancellationToken cancellationToken)
     {
+        var userWithSameName = await _unitOfWork.UserManager.FindByNameAsync(request.UserRegistrationDto.UserName);
+
+        if (userWithSameName!= null)
+        {
+            throw new ArgumentException("User with same username already exists");
+        }
+        
+        var userWithSameEmail = await _unitOfWork.UserManager.FindByEmailAsync(request.UserRegistrationDto.Email);
+
+        if (userWithSameEmail != null)
+        {
+            throw new ArgumentException("User with same email already exists");
+        }
+        
         var user = _mapper.Map<User>(request.UserRegistrationDto);
         
         var result = await _unitOfWork.UserManager.CreateAsync(
