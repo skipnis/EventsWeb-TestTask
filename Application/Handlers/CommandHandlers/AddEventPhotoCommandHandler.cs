@@ -28,7 +28,7 @@ public class AddEventPhotoCommandHandler : IRequestHandler<AddEventImageCommand,
         
         eventEntity.SetImageUrl(photoPath);
         
-        await _unitOfWork.EventRepository.AddImage(request.EventId, photoPath);
+        await _unitOfWork.EventRepository.UpdateAsync(eventEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return photoPath;

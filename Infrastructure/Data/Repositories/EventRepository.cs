@@ -63,11 +63,4 @@ public class EventRepository : IEventRepository
         
         return participants;
     }
-
-    public async Task AddImage(Guid eventId, string imageUrl)
-    {
-        var eventEntity = _events.Find(eventId);
-        eventEntity.SetImageUrl(imageUrl);
-        _events.Update(eventEntity);
-    }
 }
