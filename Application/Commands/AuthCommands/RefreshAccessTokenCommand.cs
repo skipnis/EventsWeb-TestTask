@@ -5,9 +5,9 @@ namespace Application.Commands.AuthCommands;
 
 public class RefreshAccessTokenCommand : IRequest<string>
 {
-    public RefreshAccessTokenDto Dto { get; set; }
+    public RefreshAccessTokeRequestDto Dto { get; set; }
 
-    public RefreshAccessTokenCommand(RefreshAccessTokenDto dto)
+    public RefreshAccessTokenCommand(RefreshAccessTokeRequestDto dto)
     {
         Dto = dto;
     }

@@ -13,7 +13,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginRe
     public LoginUserCommandHandler(IUnitOfWork unitOfWork, ITokenService tokenService)
     {
         _unitOfWork = unitOfWork;
-        _tokenService = tokenService;
+        _tokenService = tokenService;   
     }
 
     public async Task<LoginResponse> Handle(LoginUserCommand request, CancellationToken cancellationToken)
@@ -24,8 +24,10 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, LoginRe
             throw new UnauthorizedAccessException("Invalid credentials");
         }
         
-        var accessToken = await _tokenService.GenerateAccessToken(user);
-        var refreshToken = await _tokenService.GenerateRefreshToken(user);
+        var userRoles = await _unitOfWork.UserManager.GetRolesAsync(user);
+        
+        var accessToken = _tokenService.GenerateAccessToken(user.Id, request.UserLoginDto.Username, userRoles);
+        var refreshToken = await _tokenService.GenerateRefreshToken(user.Id);
 
         return new LoginResponse
         {

@@ -5,7 +5,7 @@ namespace Application.Interfaces;
 
 public interface ITokenService
 {
-    Task<string> GenerateAccessToken(User user);
-    Task<string> GenerateRefreshToken(User user);
-    Task<string> RefreshAccessToken(RefreshAccessTokenDto dto);
+    string GenerateAccessToken(Guid id, string userName, IEnumerable<string> roles);
+    Task<string> GenerateRefreshToken(Guid id);
+    Task<string> RefreshAccessToken(RefreshAccessTokeRequestDto dto);
 }

@@ -14,27 +14,22 @@ public class JwtTokenService : ITokenService
 {
     private readonly JwtSettings _jwtSettings;
     private readonly IRedisTokenService _redisTokenService;
-    private readonly IUnitOfWork _unitOfWork;
 
     public JwtTokenService(
         IOptions<JwtSettings> jwtSettings,
-        IRedisTokenService redisTokenService,
-        IUnitOfWork unitOfWork
+        IRedisTokenService redisTokenService
         )
     {
         _jwtSettings = jwtSettings.Value;
         _redisTokenService = redisTokenService;
-        _unitOfWork = unitOfWork;
     }
 
-    public async Task<string> GenerateAccessToken(User user)
+    public string GenerateAccessToken(Guid id, string userName, IEnumerable<string> roles)
     {
-        var roles = await _unitOfWork.UserManager.GetRolesAsync(user);
-        
         var claims = new List<Claim>
         {
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.UserName)
+            new Claim(ClaimTypes.NameIdentifier,id.ToString()),
+            new Claim(ClaimTypes.Name, userName)
         };
         
         claims.AddRange(roles.Select(role => new Claim(ClaimTypes.Role, role)));
@@ -49,35 +44,28 @@ public class JwtTokenService : ITokenService
             expires: DateTime.Now.AddMinutes(_jwtSettings.AccessTokenExpirationInMinutes),
             signingCredentials: creds
         );
-        Console.WriteLine($"Generated Token: {token}");
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
 
-    public Task<string> GenerateRefreshToken(User user)
+    public Task<string> GenerateRefreshToken(Guid id)
     {
         var refreshToken =  Guid.NewGuid().ToString();
         var expirationTime = _jwtSettings.RefreshTokenExpirationInMinutes;
-        _redisTokenService.StoreRefreshToken(user.Id.ToString(), refreshToken, TimeSpan.FromDays(expirationTime));
+        _redisTokenService.StoreRefreshToken(id.ToString(), refreshToken, TimeSpan.FromDays(expirationTime));
 
         return Task.FromResult(refreshToken);
     }
 
-    public async Task<string> RefreshAccessToken(RefreshAccessTokenDto dto)
+    public async Task<string> RefreshAccessToken(RefreshAccessTokeRequestDto dto)
     {
-        var user = await _unitOfWork.UserRepository.GetById(Guid.Parse(dto.UserId));
-        if (user == null)
-        {
-            throw new UnauthorizedAccessException("User not found.");
-        }
-        
-        var storedRefreshToken = await _redisTokenService.GetRefreshTokenByUserId(dto.UserId);
+        var storedRefreshToken = await _redisTokenService.GetRefreshTokenByUserId(dto.UserId.ToString());
         
         if (storedRefreshToken != dto.RefreshToken)
         {
             throw new UnauthorizedAccessException("Invalid refresh token.");
         }
         
-        var newAccessToken = await GenerateAccessToken(user);
+        var newAccessToken = GenerateAccessToken(dto.UserId, dto.UserName, dto.Roles);
         return newAccessToken;
     }
 }
