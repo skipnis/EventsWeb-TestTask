@@ -19,7 +19,7 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, Gui
 
     public async Task<Guid> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
     {
-        var eventEntity = await _unitOfWork.EventRepository.GetById(request.Id);
+        var eventEntity = await _unitOfWork.EventRepository.GetById(request.Id, cancellationToken);
         if (eventEntity == null)
         {
             throw new Exception("Event not found.");

@@ -16,7 +16,7 @@ public class UnregisterUserFromEventCommandHandler : IRequestHandler<UnregisterU
     public async Task<bool> Handle(UnregisterUserFromEventCommand request, CancellationToken cancellationToken)
     {
         var registration = await _unitOfWork.EventUserRepository
-            .GetByEventAndUserAsync(request.EventId, request.UserId);
+            .GetByEventAndUserAsync(request.EventId, request.UserId, cancellationToken);
         
         if(registration == null) throw new Exception("There is no such registration");
         

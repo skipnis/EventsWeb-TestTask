@@ -17,19 +17,23 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("profile/{id}")]
-    public async Task<IActionResult> GetProfile([FromRoute] Guid id)
+    public async Task<IActionResult> GetProfile(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
     {
         var query = new GetUserProfileQuery(id);
-        var userProfileDto = await _mediator.Send(query);
+        var userProfileDto = await _mediator.Send(query, cancellationToken);
         return Ok(userProfileDto);
     }
 
     [Authorize]
     [HttpGet("{id}/events")]
-    public async Task<IActionResult> GetEvents([FromRoute] Guid id)
+    public async Task<IActionResult> GetEvents(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
     {
         var query = new GetUserEventsQuery(id);
-        var events = await _mediator.Send(query);
+        var events = await _mediator.Send(query, cancellationToken);
         return Ok(events);
     }
 }

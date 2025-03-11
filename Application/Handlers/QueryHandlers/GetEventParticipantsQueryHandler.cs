@@ -19,7 +19,7 @@ public class GetEventParticipantsQueryHandler : IRequestHandler<GetEventParticip
 
     public async Task<IEnumerable<UserProfileDto>> Handle(GetEventParticipantsQuery request, CancellationToken cancellationToken)
     {
-        var users = await _unitOfWork.EventRepository.GetParticipants(request.EventId);
+        var users = await _unitOfWork.EventRepository.GetParticipants(request.EventId, cancellationToken);
         return _mapper.Map<IEnumerable<UserProfileDto>>(users);
     }
 }

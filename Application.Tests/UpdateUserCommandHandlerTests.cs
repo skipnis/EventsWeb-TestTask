@@ -31,12 +31,13 @@ public class UpdateUserCommandHandlerTests
     public async Task Handle_UserFound_UpdatesUser()
     {
         // Arrange
+        CancellationToken cancellationToken = new CancellationToken();
         var userId = Guid.NewGuid();
         var user = new User { Id = userId };
         var userUpdateDto = new UserUpdateDto { Email = "test@test.com" };
         var command = new UpdateUserCommand(userId, userUpdateDto);
 
-        _userRepositoryMock.Setup(repo => repo.GetById(userId)).ReturnsAsync(user);
+        _userRepositoryMock.Setup(repo => repo.GetById(userId, cancellationToken)).ReturnsAsync(user);
         _mapperMock.Setup(m => m.Map(userUpdateDto, It.IsAny<User>())).Verifiable();
 
         // Act
@@ -53,11 +54,12 @@ public class UpdateUserCommandHandlerTests
     public async Task Handle_UserNotFound_ThrowsException()
     {
         // Arrange
+        CancellationToken cancellationToken = new CancellationToken();
         var userId = Guid.NewGuid();
         var userUpdateDto = new UserUpdateDto { Email = "test@test.com" };
         var command = new UpdateUserCommand(userId, userUpdateDto);
 
-        _userRepositoryMock.Setup(repo => repo.GetById(userId)).ReturnsAsync((User)null);
+        _userRepositoryMock.Setup(repo => repo.GetById(userId, cancellationToken)).ReturnsAsync((User)null);
 
         // Act & Assert
         await Assert.ThrowsAsync<Exception>(() => _handler.Handle(command, CancellationToken.None));

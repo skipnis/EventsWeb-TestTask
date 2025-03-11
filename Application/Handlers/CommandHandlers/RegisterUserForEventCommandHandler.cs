@@ -16,27 +16,27 @@ public class RegisterUserForEventCommandHandler : IRequestHandler<RegisterUserFo
     
     public async Task<Guid> Handle(RegisterUserForEventCommand request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.GetById(request.UserId);
+        var user = await _unitOfWork.UserRepository.GetById(request.UserId, cancellationToken);
         if (user == null)
         {
             throw new Exception("User not found");
         }
 
-        var eventEntity = await _unitOfWork.EventRepository.GetById(request.EventId);
+        var eventEntity = await _unitOfWork.EventRepository.GetById(request.EventId, cancellationToken);
         if (eventEntity == null)
         {
             throw new Exception("Event not found");
         }
         
         var existingRegistration = await _unitOfWork.EventUserRepository
-            .GetByEventAndUserAsync(request.EventId, user.Id);
+            .GetByEventAndUserAsync(request.EventId, user.Id, cancellationToken);
 
         if (existingRegistration != null)
         {
             throw new Exception("User is already registered for this event");
         }
 
-        var participants = await _unitOfWork.EventRepository.GetParticipants(request.EventId);
+        var participants = await _unitOfWork.EventRepository.GetParticipants(request.EventId, cancellationToken);
         if (participants != null)
         {
             var count =  participants.ToList().Count;
@@ -53,7 +53,7 @@ public class RegisterUserForEventCommandHandler : IRequestHandler<RegisterUserFo
             RegisteredAt = DateTime.UtcNow
         };
         
-        await _unitOfWork.EventUserRepository.AddAsync(eventUser);
+        await _unitOfWork.EventUserRepository.AddAsync(eventUser, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
         return eventEntity.Id;

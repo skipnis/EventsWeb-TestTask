@@ -19,7 +19,7 @@ public class GetFullEventsQueryHandler : IRequestHandler<GetFullEventsQuery, IEn
 
     public async Task<IEnumerable<EventFullDto>> Handle(GetFullEventsQuery request, CancellationToken cancellationToken)
     {
-        var events = await _unitOfWork.EventRepository.GetAllAsync();
+        var events = await _unitOfWork.EventRepository.GetAllAsync(cancellationToken);
         return _mapper.Map<IEnumerable<EventFullDto>>(events);
     }
 }

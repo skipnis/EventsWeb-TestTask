@@ -19,7 +19,7 @@ public class GetUserEventsQueryHandler : IRequestHandler<GetUserEventsQuery, IEn
 
     public async Task<IEnumerable<EventPreviewDto>> Handle(GetUserEventsQuery request, CancellationToken cancellationToken)
     {
-        var events = await _unitOfWork.UserRepository.GetUserEvents(request.UserId);
+        var events = await _unitOfWork.UserRepository.GetUserEvents(request.UserId, cancellationToken);
         return _mapper.Map<IEnumerable<EventPreviewDto>>(events);
     }
 }
