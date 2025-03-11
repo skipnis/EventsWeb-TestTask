@@ -10,13 +10,11 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, Gui
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IMediator _mediator;
 
-    public UpdateEventCommandHandler(IUnitOfWork unitOfWork, IMapper mapper, IMediator mediator)
+    public UpdateEventCommandHandler(IUnitOfWork unitOfWork, IMapper mapper)
     {
         _unitOfWork = unitOfWork;
         _mapper = mapper;
-        _mediator = mediator;
     }
 
     public async Task<Guid> Handle(UpdateEventCommand request, CancellationToken cancellationToken)
@@ -30,8 +28,6 @@ public class UpdateEventCommandHandler : IRequestHandler<UpdateEventCommand, Gui
         _mapper.Map(request.EventUpdateDto, eventEntity);
         await _unitOfWork.EventRepository.UpdateAsync(eventEntity);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
-        await _mediator.Publish(new EventUpdated(request.Id));
         
         return eventEntity.Id;
     }

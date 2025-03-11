@@ -1,6 +1,7 @@
 using Application.Commands.EventCommands;
 using Application.Commands.UserCommands;
 using Application.Dtos;
+using Application.Events;
 using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -94,6 +95,7 @@ public class EventsController : ControllerBase
     {
         var command = new UpdateEventCommand(id, dto);
         var eventId = await _mediator.Send(command);
+        await _mediator.Publish(new EventUpdated(id));
         return Ok(new { eventId }); 
     }
 
