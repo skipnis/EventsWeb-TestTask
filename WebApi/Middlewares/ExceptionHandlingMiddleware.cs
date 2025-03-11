@@ -37,6 +37,7 @@ public class ExceptionHandlingMiddleware
         {
             ArgumentException => (int)HttpStatusCode.BadRequest,
             UnauthorizedAccessException => (int)HttpStatusCode.Unauthorized,
+            ApplicationException => (int)HttpStatusCode.BadRequest,
             InvalidOperationException => (int)HttpStatusCode.BadRequest, 
             _ => (int)HttpStatusCode.InternalServerError
         };

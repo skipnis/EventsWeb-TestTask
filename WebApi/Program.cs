@@ -1,7 +1,5 @@
 using System.Text;
 using Application.DI;
-using Application.Dtos;
-using Application.Validators;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Infrastructure.Data;
@@ -9,10 +7,8 @@ using Infrastructure.DI;
 using Infrastructure.Identity;
 using Infrastructure.Settings;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using WebApi;
 using WebApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);

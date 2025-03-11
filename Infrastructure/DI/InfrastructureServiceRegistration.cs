@@ -25,7 +25,8 @@ public static class InfrastructureServiceRegistration
         var connectionMultiplexer = ConnectionMultiplexer.Connect(redisConnectionString + ",abortConnect=false");
         services.AddSingleton<IConnectionMultiplexer>(connectionMultiplexer);
         
-        services.AddIdentityCore<User>()
+        services.AddIdentityCore<User>(options =>
+                options.User.RequireUniqueEmail = true)
             .AddRoles<IdentityRole<Guid>>()
             .AddEntityFrameworkStores<ApplicationDbContext>();
         
