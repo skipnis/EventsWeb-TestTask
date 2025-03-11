@@ -24,7 +24,8 @@ public class GetFilteredEventsQueryHandler : IRequestHandler<GetFilteredEventsQu
             request.DateFrom,
             request.DateTo,
             request.Categories, 
-            request.Locations);
+            request.Locations,
+            cancellationToken);
         
         return _mapper.Map<IEnumerable<EventFullDto>>(events);
     }

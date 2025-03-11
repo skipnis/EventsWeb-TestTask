@@ -19,7 +19,7 @@ public class GetUserProfileQueryHandler : IRequestHandler<GetUserProfileQuery, U
 
     public async Task<UserProfileDto> Handle(GetUserProfileQuery request, CancellationToken cancellationToken)
     {
-        var user = await _unitOfWork.UserRepository.GetById(request.Id);
+        var user = await _unitOfWork.UserRepository.GetById(request.Id, cancellationToken);
         
         if (user == null)
         {

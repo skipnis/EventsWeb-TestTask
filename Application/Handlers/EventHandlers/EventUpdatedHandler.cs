@@ -19,19 +19,19 @@ public class EventUpdatedHandler : INotificationHandler<EventUpdated>
 
     public async Task Handle(EventUpdated notification, CancellationToken cancellationToken)
     {
-        var eventEntity = await _unitOfWork.EventRepository.GetById(notification.EventId);
+        var eventEntity = await _unitOfWork.EventRepository.GetById(notification.EventId, cancellationToken);
         
         if (eventEntity == null)
             throw new Exception("Event not found");
         
-        var usersToNotify = await _unitOfWork.EventRepository.GetParticipants(notification.EventId);
+        var usersToNotify = await _unitOfWork.EventRepository.GetParticipants(notification.EventId, cancellationToken);
 
         if (usersToNotify != null && usersToNotify.Any())
         {
             foreach (var user in usersToNotify)
             {
                 var message = _emailContentGenerator.GenerateEventUpdateContent(user.FirstName, eventEntity.Title);
-                await _emailService.SendEmailAsync(user.Email, "Event Update Notification", message);
+                await _emailService.SendEmailAsync(user.Email, "Event Update Notification", message, cancellationToken);
             }
         }
     }

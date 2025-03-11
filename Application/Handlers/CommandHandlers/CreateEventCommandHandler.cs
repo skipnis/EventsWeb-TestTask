@@ -21,7 +21,7 @@ public class CreateEventCommandHandler : IRequestHandler<CreateEventCommand, Gui
     {
         var eventEntity = _mapper.Map<Event>(request.EventCreationDto);
         
-        await _unitOfWork.EventRepository.AddAsync(eventEntity);
+        await _unitOfWork.EventRepository.AddAsync(eventEntity, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
         
         return eventEntity.Id;

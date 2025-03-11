@@ -19,7 +19,7 @@ public class GetPaginatedEventsQueryHandler : IRequestHandler<GetPaginatedEvents
 
     public async Task<List<EventFullDto>> Handle(GetPaginatedEventsQuery request, CancellationToken cancellationToken)
     {
-        var events = await _unitOfWork.EventRepository.GetPaginatedAsync(request.PageNumber, request.PageSize);
+        var events = await _unitOfWork.EventRepository.GetPaginatedAsync(request.PageNumber, request.PageSize, cancellationToken);
         return _mapper.Map<List<EventFullDto>>(events);
     }
 }

@@ -13,14 +13,14 @@ public class EventUserRepository : IEventUserRepository
         _eventUsers = context.Set<EventUser>();
     }
 
-    public async Task AddAsync(EventUser user)
+    public async Task AddAsync(EventUser user, CancellationToken cancellationToken)
     {
-        await _eventUsers.AddAsync(user);
+        await _eventUsers.AddAsync(user, cancellationToken);
     }
 
-    public async Task<EventUser?> GetByEventAndUserAsync(Guid eventId, Guid userId)
+    public async Task<EventUser?> GetByEventAndUserAsync(Guid eventId, Guid userId, CancellationToken cancellationToken)
     {
-       return await _eventUsers.FirstOrDefaultAsync(eu => eu.EventId == eventId && eu.UserId == userId);
+       return await _eventUsers.FirstOrDefaultAsync(eu => eu.EventId == eventId && eu.UserId == userId, cancellationToken);
     }
 
     public async Task RemoveAsync(Guid eventId, Guid userId)

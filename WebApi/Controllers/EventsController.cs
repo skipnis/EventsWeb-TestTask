@@ -21,44 +21,45 @@ public class EventsController : ControllerBase
     }
 
     [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetById([FromRoute] Guid id)
+    public async Task<IActionResult> GetById([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         var query = new GetFullEventByIdQuery(id);
-        var eventFullInfo = await _mediator.Send(query);
+        var eventFullInfo = await _mediator.Send(query, cancellationToken);
         return Ok(eventFullInfo); 
     }
     
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
     {
         var query = new GetFullEventsQuery();
-        var events = await _mediator.Send(query);
+        var events = await _mediator.Send(query, cancellationToken);
         return Ok(events);
     }
     
     [HttpGet("paginated")]
     public async Task<IActionResult> GetAllPaginated(
+        CancellationToken cancellationToken,
         [FromQuery] int pageNumber = 1,
         [FromQuery] int pageSize = 5)
     {
         var query = new GetPaginatedEventsQuery(pageNumber, pageSize);
-        var events = await _mediator.Send(query);
+        var events = await _mediator.Send(query, cancellationToken);
         return Ok(events);
     }
     
     [HttpGet("preview")]
-    public async Task<IActionResult> GetAllPreview()
+    public async Task<IActionResult> GetAllPreview(CancellationToken cancellationToken)
     {
         var query = new GetEventsPreviewQuery();
-        var events = await _mediator.Send(query);
+        var events = await _mediator.Send(query, cancellationToken);
         return Ok(events);
     }
 
     [HttpGet("{name}")]
-    public async Task<IActionResult> GetByName([FromRoute] string name)
+    public async Task<IActionResult> GetByName([FromRoute] string name, CancellationToken cancellationToken)
     {
         var query = new GetFullEventByNameQuery(name);
-        var eventEnity = await _mediator.Send(query);
+        var eventEnity = await _mediator.Send(query, cancellationToken);
         return Ok(eventEnity);
     }
 
@@ -67,7 +68,8 @@ public class EventsController : ControllerBase
         [FromQuery] DateTime? dateFrom,
         [FromQuery] DateTime? dateTo,
         [FromQuery] List<string>? categories,
-        [FromQuery] List<string>? locations)
+        [FromQuery] List<string>? locations,
+        CancellationToken cancellationToken)
     {
         var query = new GetFilteredEventsQuery
         (
@@ -76,51 +78,71 @@ public class EventsController : ControllerBase
             categories,
             locations);
         
-        var events = await _mediator.Send(query);
+        var events = await _mediator.Send(query, cancellationToken);
         return Ok(events);
     }
     
     [Authorize(Policy="AdminOrEventOwnerPolicy")]
-    [HttpPost]
-    public async Task<IActionResult> CreateEvent([FromBody] EventCreationDto dto)
+    [HttpGet("{id}/participants")]
+    public async Task<IActionResult> GetParticipants(
+        [FromRoute] Guid id,
+        CancellationToken cancellationToken)
     {
-        var command = new CreateEventCommand(dto);
-        var eventId = await _mediator.Send(command);
-        return CreatedAtAction(nameof(GetById), new { id = eventId }, eventId);
+        var query = new GetEventParticipantsQuery(id);
+        var participants = await _mediator.Send(query, cancellationToken);
+        return Ok(participants);
     }
     
     [Authorize(Policy="AdminOrEventOwnerPolicy")]
-    [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateEvent([FromRoute] Guid id, [FromBody] EventUpdateDto dto)
+    [HttpPost]
+    public async Task<IActionResult> CreateEvent([FromBody] EventCreationDto dto, CancellationToken cancellationToken)
     {
-        var command = new UpdateEventCommand(id, dto);
-        var eventId = await _mediator.Send(command);
-        await _mediator.Publish(new EventUpdated(id));
-        return Ok(new { eventId }); 
+        var command = new CreateEventCommand(dto);
+        var eventId = await _mediator.Send(command, cancellationToken);
+        return CreatedAtAction(nameof(GetById), new { id = eventId }, eventId);
     }
 
     [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpPost("{id}/photo")]
-    public async Task<IActionResult> AddPhoto([FromRoute] Guid id, [FromForm] AddEventImageDto dto)
+    public async Task<IActionResult> AddPhoto(
+        [FromRoute] Guid id,
+        [FromForm] AddEventImageDto dto,
+        CancellationToken cancellationToken)
     {
         var command = new AddEventImageCommand(id, dto);
-        var path = await _mediator.Send(command);
+        var path = await _mediator.Send(command, cancellationToken);
         return Ok(new { path });
     }
     
     [Authorize]
     [HttpPost("register")]
-    public async Task<IActionResult> RegisterUserForEvent([FromBody] RegisterUserForEventCommand command)
+    public async Task<IActionResult> RegisterUserForEvent(
+        [FromBody] RegisterUserForEventCommand command,
+        CancellationToken cancellationToken)
     {
-        var eventId = await _mediator.Send(command);
+        var eventId = await _mediator.Send(command, cancellationToken);
         return Ok(new { EventId = eventId });
+    }
+    
+        
+    [Authorize(Policy="AdminOrEventOwnerPolicy")]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateEvent(
+        [FromRoute] Guid id,
+        [FromBody] EventUpdateDto dto,
+        CancellationToken cancellationToken)
+    {
+        var command = new UpdateEventCommand(id, dto);
+        var eventId = await _mediator.Send(command, cancellationToken);
+        await _mediator.Publish(new EventUpdated(id), cancellationToken);
+        return Ok(new { eventId }); 
     }
 
     [Authorize(Policy="AdminOrEventOwnerPolicy")]
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteEvent([FromRoute] Guid id)
+    public async Task<IActionResult> DeleteEvent([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-       var result = await _mediator.Send(new DeleteEventCommand(id));
+       var result = await _mediator.Send(new DeleteEventCommand(id), cancellationToken);
        if (result)
        {
            return Ok(new { Message = "Event successfully deleted." });
@@ -129,22 +151,15 @@ public class EventsController : ControllerBase
     }
     
     [HttpDelete("unregister")]
-    public async Task<IActionResult> UnregisterUserFromEvent([FromBody] UnregisterUserFromEventCommand command)
+    public async Task<IActionResult> UnregisterUserFromEvent(
+        [FromBody] UnregisterUserFromEventCommand command,
+        CancellationToken cancellationToken)
     {
-        var result = await _mediator.Send(command);
+        var result = await _mediator.Send(command, cancellationToken);
         if (result)
         {
             return Ok(new { Message = "User successfully unregistered from event" });
         }
         return NotFound(new { Message = "Registration not found or cannot be canceled" });
-    }
-
-    [Authorize(Policy="AdminOrEventOwnerPolicy")]
-    [HttpGet("{id}/participants")]
-    public async Task<IActionResult> GetParticipants([FromRoute] Guid id)
-    {
-        var query = new GetEventParticipantsQuery(id);
-        var participants = await _mediator.Send(query);
-        return Ok(participants);
     }
 }

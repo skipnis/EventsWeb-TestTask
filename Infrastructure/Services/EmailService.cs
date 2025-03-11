@@ -14,7 +14,7 @@ public class EmailService : IEmailService
     {
         _settings = options.Value ?? throw new ArgumentNullException(nameof(options));
     }
-    public async Task SendEmailAsync(string email, string subject, string message)
+    public async Task SendEmailAsync(string email, string subject, string message, CancellationToken cancellationToken)
     {
         var client = new SendGridClient(_settings.ApiKey);
         
@@ -25,6 +25,6 @@ public class EmailService : IEmailService
         var htmlContent = $"<p>{message}</p>";
         var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
         
-        await client.SendEmailAsync(msg);
+        await client.SendEmailAsync(msg, cancellationToken);
     }
 }

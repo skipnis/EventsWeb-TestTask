@@ -17,7 +17,7 @@ public class AddEventPhotoCommandHandler : IRequestHandler<AddEventImageCommand,
 
     public async Task<string> Handle(AddEventImageCommand request, CancellationToken cancellationToken)
     {
-        var eventEntity = await _unitOfWork.EventRepository.GetById(request.EventId);
+        var eventEntity = await _unitOfWork.EventRepository.GetById(request.EventId, cancellationToken);
         
         if(eventEntity == null) throw new Exception($"Event with id: {request.EventId} not found");
         

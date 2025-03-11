@@ -13,24 +13,24 @@ public class UserRepository : IUserRepository
         _users = context.Set<User>();
     }
 
-    public async Task AddAsync(User entity)
+    public async Task AddAsync(User entity, CancellationToken cancellationToken)
     {
-        await _users.AddAsync(entity);
+        await _users.AddAsync(entity, cancellationToken);
     }
 
-    public async Task<IEnumerable<User>> GetAllAsync()
+    public async Task<IEnumerable<User>> GetAllAsync(CancellationToken cancellationToken)
     {
-        return await _users.ToListAsync();
+        return await _users.ToListAsync(cancellationToken);
     }
 
-    public async Task<User> GetById(Guid id)
+    public async Task<User> GetById(Guid id, CancellationToken cancellationToken)
     {
-        return await _users.FindAsync(id);
+        return await _users.FindAsync(id, cancellationToken);
     }
 
-    public async Task<List<User>> GetPaginatedAsync(int pageNumber, int pageSize)
+    public async Task<List<User>> GetPaginatedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        return await _users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
+        return await _users.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync(cancellationToken);
     }
 
     public void UpdateAsync(User entity)
@@ -43,18 +43,18 @@ public class UserRepository : IUserRepository
         _users.Remove(user);
     }
 
-    public async Task<IEnumerable<Event>?> GetUserEvents(Guid userId)
+    public async Task<IEnumerable<Event>?> GetUserEvents(Guid userId, CancellationToken cancellationToken)
     {
         var events = await _users
             .Where(u => u.Id == userId) 
             .SelectMany(u => u.EventUsers)  
             .Select(eu => eu.Event)  
-            .ToListAsync();
+            .ToListAsync(cancellationToken);
         return events;
     }
 
-    public async Task<User> GetByName(string name)
+    public async Task<User> GetByName(string name, CancellationToken cancellationToken)
     {
-        return await _users.FindAsync(name);
+        return await _users.FindAsync(name, cancellationToken);
     }
 }

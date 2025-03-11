@@ -15,7 +15,7 @@ public class DeleteEventCommandHandler : IRequestHandler<DeleteEventCommand, boo
 
     public async Task<bool> Handle(DeleteEventCommand request, CancellationToken cancellationToken)
     {
-        var eventEntity = await _unitOfWork.EventRepository.GetById(request.Id);
+        var eventEntity = await _unitOfWork.EventRepository.GetById(request.Id, cancellationToken);
         if (eventEntity == null)
         {
             throw new Exception($"Event with id {request.Id} does not exist");

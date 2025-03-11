@@ -19,7 +19,7 @@ public class GetFullEventByNameQueryHandler : IRequestHandler<GetFullEventByName
 
     public async Task<EventFullDto> Handle(GetFullEventByNameQuery request, CancellationToken cancellationToken)
     {
-        var eventEntity = await _unitOfWork.EventRepository.GetByName(request.Name);
+        var eventEntity = await _unitOfWork.EventRepository.GetByName(request.Name, cancellationToken);
         if(eventEntity == null) throw new Exception($"Event with name {request.Name} not found");
         return _mapper.Map<EventFullDto>(eventEntity);
     }

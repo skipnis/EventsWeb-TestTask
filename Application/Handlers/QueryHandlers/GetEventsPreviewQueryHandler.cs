@@ -19,7 +19,7 @@ public class GetEventsPreviewQueryHandler : IRequestHandler<GetEventsPreviewQuer
     
     public async Task<IEnumerable<EventPreviewDto>> Handle(GetEventsPreviewQuery request, CancellationToken cancellationToken)
     {
-        var events = await _unitOfWork.EventRepository.GetAllAsync();
+        var events = await _unitOfWork.EventRepository.GetAllAsync(cancellationToken);
         return _mapper.Map<IEnumerable<EventPreviewDto>>(events);
     }
 }
